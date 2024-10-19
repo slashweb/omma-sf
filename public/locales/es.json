@@ -1,0 +1,9 @@
+{
+  "register": "Bienvenido a OmmaCash, necesitamos saber un poco más sobre ti para comenzar.",
+  "name": "Nombre",
+  "email": "Correo electrónico",
+  "phone": "Número de teléfono",
+  "acceptTerms": "Acepto los términos y condiciones",
+  "submit": "Enviar",
+  "confirm": "Confirmar transferencia"
+}
