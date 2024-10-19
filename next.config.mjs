@@ -1,8 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   i18n: {
-    locales: ['es', 'en'],
+    locales: ['en'],
     defaultLocale: 'en',
+    localeDetection: true,
   },
   experimental: {
     missingSuspenseWithCSRBailout: false,

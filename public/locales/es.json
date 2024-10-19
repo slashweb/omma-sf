@@ -1,9 +1,16 @@
 {
-  "register": "Bienvenido a OmmaCash, necesitamos saber un poco más sobre ti para comenzar.",
+  "register": "Para continuar necesitamos saber un poco más de ti, mijo, ¿nos ayudas llenando estos datos? 👵 🟣",
   "name": "Nombre",
-  "email": "Correo electrónico",
-  "phone": "Número de teléfono",
+  "email": "Dirección de correo",
+  "phone": "Teléfono celular",
   "acceptTerms": "Acepto los términos y condiciones",
-  "submit": "Enviar",
-  "confirm": "Confirmar transferencia"
+  "submit": "Completar registro",
+  "phoneConfirm": "Confirma tu número de teléfono",
+  "transferConfirm": "Estás a punto de transferir a:",
+  "serviceCharge": "Costo del servicio .50 USD",
+  "confirm": "Confirmar",
+  "back": "Regresar",
+  "success": "¡Así me gusta, mijito! 👵🏼💜",
+  "error": "Del tazón a la boca se cae la sopa, mijo... 👵🏼💔",
+  "cancel": "Cancelar"
 }

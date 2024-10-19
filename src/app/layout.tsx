@@ -1,20 +1,7 @@
 import type {Metadata} from "next";
-import localFont from "next/font/local";
 import {Fredoka} from 'next/font/google'; // Importar Fredoka desde Google Fonts
 import "./globals.css";
-import {TranslationProvider} from "../../context/TranslationContext";
-
-// Cargar las fuentes locales
-const geistSans = localFont({
-    src: "./fonts/GeistVF.woff",
-    variable: "--font-geist-sans",
-    weight: "100 900",
-});
-const geistMono = localFont({
-    src: "./fonts/GeistMonoVF.woff",
-    variable: "--font-geist-mono",
-    weight: "100 900",
-});
+import {TranslationProvider} from "@/context/TranslationContext";
 
 // Importar Fredoka desde Google Fonts
 const fredoka = Fredoka({
@@ -29,10 +16,7 @@ export const metadata: Metadata = {
 };
 
 // Layout como Server Component
-export default function RootLayout({
-                                       children,
-                                       params,
-                                   }: {
+export default function RootLayout({children, params}: {
     children: React.ReactNode;
     params: { locale: string };
 }) {
@@ -40,7 +24,7 @@ export default function RootLayout({
 
     return (
         <html lang={locale}>
-        <body className={`${geistSans.variable} ${geistMono.variable} ${fredoka.variable} antialiased`}>
+        <body className={`${fredoka.variable} antialiased`}>
         <TranslationProvider locale={locale}>
             {children}
         </TranslationProvider>

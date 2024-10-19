@@ -1,6 +1,6 @@
 // utils/translation.js
-import en from '../public/locales/en.json';
-import es from '../public/locales/es.json';
+import en from '../../public/locales/en.json';
+import es from '../../public/locales/es.json';
 
 export const getTranslations = (locale) => {
   switch (locale) {

@@ -5,21 +5,12 @@
 /* Variables de color */
 :root {
     --background: #ffffff;
-    --foreground: #171717;
     --font-fredoka: 'Fredoka', sans-serif; /* Fuente por defecto: Fredoka */
 }
 
-/* Modo oscuro */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --background: #0a0a0a;
-        --foreground: #ededed;
-    }
-}
 
 /* Estilo base del cuerpo */
 body {
-    color: var(--foreground); /* Aplicar el color de texto basado en el tema */
     background-color: var(--background); /* Aplicar el fondo basado en el tema */
     font-family: var(--font-fredoka); /* Usar Fredoka como la fuente predeterminada */
 }

@@ -1,10 +1,10 @@
 'use client';
 
-import {Suspense, useEffect, useState} from 'react';
-import useValidator from "../../../hooks/useValidator";
+import {useEffect, useState} from 'react';
+import useValidator from "@/hooks/useValidator";
 import GradientButton from "@/components/GradientButton";
 import {useSearchParams} from "next/navigation";
-import {useTranslation} from "../../../context/TranslationContext";
+import {useTranslation} from "@/context/TranslationContext";
 import DangerButton from "@/components/DangerButton";
 
 export default function Confirm() {

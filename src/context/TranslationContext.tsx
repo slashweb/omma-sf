@@ -1,7 +1,7 @@
 'use client';  // Esta línea es necesaria para que el contexto funcione en el cliente
 
 import {createContext, useContext, ReactNode} from 'react';
-import {getTranslations} from '../utils/translation';
+import {getTranslations} from '@/utils/translation';
 
 // Definimos el tipo para el contexto
 interface TranslationContextProps {

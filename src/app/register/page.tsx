@@ -2,8 +2,8 @@
 
 import {useSearchParams} from 'next/navigation'; // Hook para obtener los query params
 import {useEffect, useState} from 'react';       // Hooks para manejar el estado y efectos
-import {useTranslation} from "../../../context/TranslationContext";
-import useValidator from "../../../hooks/useValidator";
+import {useTranslation} from "@/context/TranslationContext";
+import useValidator from "@/hooks/useValidator";
 import GradientButton from "@/components/GradientButton";
 import CustomInput from "@/components/CustomInput";
 
