@@ -12,7 +12,7 @@ const fredoka = Fredoka({
 
 export const metadata: Metadata = {
     title: "OmmaCash",
-    description: "Sending money made easy",
+    description: "Sending money made easy"
 };
 
 // Layout como Server Component
