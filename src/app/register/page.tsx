@@ -7,6 +7,7 @@ import useValidator from "@/hooks/useValidator";
 import GradientButton from "@/components/GradientButton";
 import CustomInput from "@/components/CustomInput";
 import {useRouter} from 'next/navigation';
+import LoadingIndicator from "@/components/LoadingIndicator";
 
 export default function Register() {
     const t = useTranslation();
@@ -21,6 +22,7 @@ export default function Register() {
         phone: '',
         uid: ''
     });
+    const [isLoading, setIsLoading] = useState(false);
 
     // Efecto para autocompletar los campos con los query params al cargar la página
     useEffect(() => {
@@ -48,14 +50,19 @@ export default function Register() {
 
     const registerUser = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setIsLoading(true);
         const result = await beginRegistration(formData);
         if (result) {
             router.push('/success');
         } else {
             router.push('/error');
         }
+        setIsLoading(false);
     }
 
+    if (isLoading) {
+        return <LoadingIndicator />
+    }
     return (
         <>
             <div className="flex min-h-full flex-1 items-center justify-center px-6 py-12 sm:px-6 lg:px-8">
@@ -135,7 +142,7 @@ export default function Register() {
                                 required
                                 className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                             />
-                            <label htmlFor="accept-terms" className="ml-3 block text-sm font-bold leading-6 text-white">
+                            <label htmlFor="accept-terms" className="ml-3 block text-sm leading-6 text-gray-900">
                                 Confirm your phone number
                             </label>
                         </div>

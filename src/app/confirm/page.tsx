@@ -7,6 +7,7 @@ import {useSearchParams} from "next/navigation";
 import {useTranslation} from "@/context/TranslationContext";
 import DangerButton from "@/components/DangerButton";
 import { useRouter } from 'next/navigation';
+import LoadingIndicator from "@/components/LoadingIndicator";
 
 export default function Confirm() {
 
@@ -18,6 +19,7 @@ export default function Confirm() {
     const [amount, setAmount] = useState('')
     const [method, setMethod] = useState('')
     const router = useRouter();
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const uid = searchParams.get('uid') || '';
@@ -32,13 +34,20 @@ export default function Confirm() {
 
     const validate = async () => {
 
+        setIsLoading(true);
         const result = await beginLogin(uid)
         if (result) {
             router.push('/success');
         } else {
             router.push('/error');
         }
+        setIsLoading(false);
     }
+
+    if (isLoading) {
+        return <LoadingIndicator />
+    }
+
     return (
         <div className="flex min-h-full flex-1 items-center justify-center px-6 py-12 sm:px-6 lg:px-8">
             <div className="w-full max-w-sm space-y-10">
