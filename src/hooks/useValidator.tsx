@@ -46,12 +46,11 @@ export default function useValidator() {
 
     const beginLogin = async (uid: string) => {
         const server = process.env.NEXT_PUBLIC_API_SERVER
-        const authenticateOptions = '/webauthn/generate-authentication-options'
+        const authenticateOptions = '/webauthn/generate-authentication-options?uid=' + uid
         const verificationUrl = '/webauthn/verify-authentication'
 
-        const res = await axios.get(server + authenticateOptions);
-
         try {
+            const res = await axios.get(server + authenticateOptions);
             const authenticationResponse = await startAuthentication(res.data)
             const verificationJSON = await axios.post(server + verificationUrl, {
                 authenticationResponse,
