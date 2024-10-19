@@ -4,6 +4,9 @@ const nextConfig = {
     locales: ['es', 'en'],
     defaultLocale: 'en',
   },
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
+  },
 };
 
 export default nextConfig;
