@@ -6,16 +6,18 @@ import {useTranslation} from "@/context/TranslationContext";
 import useValidator from "@/hooks/useValidator";
 import GradientButton from "@/components/GradientButton";
 import CustomInput from "@/components/CustomInput";
+import {useRouter} from 'next/navigation';
 
 export default function Register() {
     const t = useTranslation();
     const searchParams = useSearchParams();
     const {beginRegistration} = useValidator();
+    const router = useRouter();
 
     // Estados para almacenar los valores del formulario
     const [formData, setFormData] = useState({
         fullname: '',
-        email: 'lopez.victor94@gmail.com',
+        email: '',
         phone: '',
         uid: ''
     });
@@ -47,7 +49,11 @@ export default function Register() {
     const registerUser = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const result = await beginRegistration(formData);
-        alert(result ? 'Usuario registrado' : 'Error al registrar usuario');
+        if (result) {
+            router.push('/success');
+        } else {
+            router.push('/error');
+        }
     }
 
     return (

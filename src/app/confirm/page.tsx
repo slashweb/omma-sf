@@ -6,6 +6,7 @@ import GradientButton from "@/components/GradientButton";
 import {useSearchParams} from "next/navigation";
 import {useTranslation} from "@/context/TranslationContext";
 import DangerButton from "@/components/DangerButton";
+import { useRouter } from 'next/navigation';
 
 export default function Confirm() {
 
@@ -16,6 +17,7 @@ export default function Confirm() {
     const [name, setName] = useState('')
     const [amount, setAmount] = useState('')
     const [method, setMethod] = useState('')
+    const router = useRouter();
 
     useEffect(() => {
         const uid = searchParams.get('uid') || '';
@@ -30,11 +32,11 @@ export default function Confirm() {
 
     const validate = async () => {
 
-        const res = await beginLogin(uid)
-        if (res) {
-            alert('Usuario autenticado')
+        const result = await beginLogin(uid)
+        if (result) {
+            router.push('/success');
         } else {
-            alert('Error al autenticar usuario')
+            router.push('/error');
         }
     }
     return (
