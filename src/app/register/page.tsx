@@ -136,7 +136,7 @@ export default function Register() {
                                 className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                             />
                             <label htmlFor="accept-terms" className="ml-3 block text-sm font-bold leading-6 text-white">
-                                {t.phoneConfirm}
+                                Confirm your phone number
                             </label>
                         </div>
 

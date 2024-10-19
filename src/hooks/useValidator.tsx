@@ -26,18 +26,14 @@ export default function useValidator() {
             attResp = await startRegistration(res.data)
         } catch (e) {
             console.log('Error on register user ', e)
-            alert(JSON.stringify(e))
         }
 
-        alert(JSON.stringify(attResp))
         const body = {
             registrationResponse: attResp,
             ...user
         }
-        alert(JSON.stringify(body))
 
         const verificationJSON = await axios.post(server + verificationUrl, body)
-        console.log('verificationJSON', verificationJSON)
         // Show UI appropriate for the `verified` status
         if (verificationJSON && verificationJSON?.data.verified) {
             setIsRegistered(true)
