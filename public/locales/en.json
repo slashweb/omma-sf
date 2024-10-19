@@ -5,5 +5,9 @@
   "phone": "Cellphone",
   "acceptTerms": "I accept the terms and conditions",
   "submit": "Complete registration",
-  "confirm": "Confirm transfer"
+  "phoneConfirm": "Confirm your phone number",
+  "transferConfirm": "You are about to transfer to:",
+  "serviceCharge": "Service cost .50 USD",
+  "confirm": "Confirm ",
+  "cancel": "Cancel"
 }

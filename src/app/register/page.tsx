@@ -4,8 +4,8 @@ import {useSearchParams} from 'next/navigation'; // Hook para obtener los query 
 import {useEffect, useState} from 'react';       // Hooks para manejar el estado y efectos
 import {useTranslation} from "../../../context/TranslationContext";
 import useValidator from "../../../hooks/useValidator";
-import GradientButton from "../../../components/GradientButton";
-import CustomInput from "../../../components/CustomInput";
+import GradientButton from "@/components/GradientButton";
+import CustomInput from "@/components/CustomInput";
 
 export default function Register() {
     const t = useTranslation();
@@ -119,6 +119,18 @@ export default function Register() {
                             />
                             <label htmlFor="accept-terms" className="ml-3 block text-sm leading-6 text-gray-900">
                                 {t.acceptTerms}
+                            </label>
+                        </div>
+                        <div className="flex items-center">
+                            <input
+                                id="confirm-phone"
+                                name="confirm-phone"
+                                type="checkbox"
+                                required
+                                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                            />
+                            <label htmlFor="accept-terms" className="ml-3 block text-sm font-bold leading-6 text-white">
+                                {t.phoneConfirm}
                             </label>
                         </div>
 
