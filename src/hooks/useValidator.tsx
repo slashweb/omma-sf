@@ -15,34 +15,33 @@ export default function useValidator() {
     const beginRegistration = async (user: formData) => {
         const server = process.env.NEXT_PUBLIC_API_SERVER
 
-        console.log('server', server)
         const registerUrl = '/webauthn/register?uid=' + user.uid
         const verificationUrl = '/webauthn/verify'
 
-        const res = await axios.get(server + registerUrl);
 
         let attResp
         try {
+            const res = await axios.get(server + registerUrl);
             attResp = await startRegistration(res.data)
-        } catch (e) {
-            console.log('Error on register user ', e)
-        }
 
-        const body = {
-            registrationResponse: attResp,
-            ...user
-        }
-
-        const verificationJSON = await axios.post(server + verificationUrl, body)
-        // Show UI appropriate for the `verified` status
-        if (verificationJSON && verificationJSON?.data.verified) {
-            setIsRegistered(true)
-            return true
-        } else {
-            setIsRegistered(false)
+            const body = {
+                registrationResponse: attResp,
+                ...user
+            }
+            const verificationJSON = await axios.post(server + verificationUrl, body)
+            // Show UI appropriate for the `verified` status
+            if (verificationJSON && verificationJSON?.data.verified) {
+                setIsRegistered(true)
+                return true
+            } else {
+                setIsRegistered(false)
+                return false
+            }
+        } catch
+            (e) {
+            console.error('Error on register user ', e)
             return false
         }
-
     }
 
     const beginLogin = async (uid: string) => {
@@ -66,6 +65,7 @@ export default function useValidator() {
             }
         } catch (e) {
             console.error('Error on login user ', e)
+            return false
         }
 
     }
