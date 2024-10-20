@@ -1,4 +1,3 @@
-import GradientButton from "@/components/GradientButton";
 import {useAccount, useSendTransaction} from "wagmi";
 import {useTranslation} from "@/context/TranslationContext";
 import {useEffect, useState} from "react";
@@ -7,10 +6,12 @@ import {getUserWallets} from "@/web3/utils";
 import CustomInput from "@/components/CustomInput";
 import {Wallet} from "@/types/general";
 import {ConnectButton} from "@rainbow-me/rainbowkit";
+import GradientButton from "@/components/GradientButton";
 
 export default function TransferValidator() {
     const {data: hash, sendTransaction} = useSendTransaction();
     const t = useTranslation();
+    const {chain} = useAccount();
     const [uid, setUid] = useState('');
     const [wallets, setWallets] = useState([] as Wallet[]);
     const [usdAmount, setUsdAmount] = useState('');  // Monto en USD
@@ -55,11 +56,15 @@ export default function TransferValidator() {
         });
     }
 
-    // Función para obtener el precio del token en USD desde CoinGecko
+    // Función para obtener el precio del token en USD dependiendo de la red
     async function fetchPrice() {
-        const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd`);
+        if (!chain) return
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        const coinId = chain?.id === 137 ? 'matic-network' : 'ethereum';  // Detectar si es Matic o ETH
+        const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=usd`);
         const data = await response.json();
-        setPriceUSD(data.ethereum.usd);  // Actualiza el precio del token en USD
+        setPriceUSD(data[coinId].usd);  // Actualiza el precio del token en USD
     }
 
     // Actualizar el precio cada 60 segundos
@@ -67,7 +72,7 @@ export default function TransferValidator() {
         fetchPrice();  // Llamada inicial para obtener el precio
         const interval = setInterval(fetchPrice, 60000);  // Actualiza cada 60 segundos
         return () => clearInterval(interval);  // Limpia el intervalo al desmontar
-    }, []);
+    }, [chain]);
 
     // Actualiza el monto en la moneda nativa cada vez que cambia el monto en USD o el precio
     useEffect(() => {
@@ -94,7 +99,7 @@ export default function TransferValidator() {
     };
 
     return (
-        <div className={'flex shadow-lg p-4 rounded-lg  flex-1 flex-col mx-auto my-10 justify-center max-w-xl'}>
+        <div className={'flex shadow-lg p-4 rounded-lg flex-1 flex-col mx-auto my-10 justify-center max-w-xl'}>
             <div className="flex flex-col items-center">
                 <img src="/img/money.png" alt="" className={'text-center w-48'}/>
                 <h1 className={'text-center text-2xl'}>
@@ -118,13 +123,13 @@ export default function TransferValidator() {
 
             {/* Mostrar el equivalente en la moneda nativa */}
             <p className="mt-2 text-center">
-                {nativeAmount ? `${nativeAmount.toFixed(6)} ETH` : t.calculating}
+                {nativeAmount ? `${nativeAmount.toFixed(6)} ${chain?.id === 137 ? 'MATIC' : 'ETH'}` : t.calculating}
             </p>
 
             {/* Mostrar el desglose de la cantidad incluyendo la comisión */}
             <div className="mt-4 text-center">
                 <p>{t.commission}: $0.5 USD</p>
-                <p>{t.totalWithCommission}: {totalNativeAmount.toFixed(6)} ETH</p>
+                <p>{t.totalWithCommission}: {totalNativeAmount.toFixed(6)} {chain?.id === 137 ? 'MATIC' : 'ETH'}</p>
             </div>
 
             {/* Conectar billetera */}
@@ -141,6 +146,5 @@ export default function TransferValidator() {
 
             {hash && <p>{hash}</p>}
         </div>
-
     );
 }
