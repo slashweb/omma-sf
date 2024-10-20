@@ -2,10 +2,10 @@ import GradientButton from "@/components/GradientButton";
 import {useAccount, useSendTransaction} from "wagmi";
 import {useTranslation} from "@/context/TranslationContext";
 import {useEffect, useState} from "react";
-import {useSearchParams} from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 import {getUserWallets} from "@/web3/utils";
 import CustomInput from "@/components/CustomInput";
-import { Wallet } from "@/types/general";
+import {Wallet} from "@/types/general";
 import {ConnectButton} from "@rainbow-me/rainbowkit";
 
 export default function TransferValidator() {
@@ -20,6 +20,7 @@ export default function TransferValidator() {
     const [usdCommission] = useState(0.5);  // Comisión fija en USD
     const searchParams = useSearchParams();
     const {isConnected} = useAccount();
+    const router = useRouter();
 
     // Obtener el UID desde los query params
     useEffect(() => {
@@ -81,20 +82,26 @@ export default function TransferValidator() {
         }
     }, [usdAmount, priceUSD]);
 
+    useEffect(() => {
+        if (hash) {
+            router.push(`/success`);
+        }
+    }, [hash]);
+
     // Función para manejar la entrada del monto en USD
     const handleUsdAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUsdAmount(e.target.value);
     };
 
     return (
-        <div className={'flex flex-col justify-center items-center p-8'}>
+        <div className={'flex shadow-lg p-4 rounded-lg  flex-1 flex-col mx-auto my-10 justify-center max-w-xl'}>
             <div className="flex flex-col items-center">
                 <img src="/img/money.png" alt="" className={'text-center w-48'}/>
                 <h1 className={'text-center text-2xl'}>
                     {t.connectTitle}
                 </h1>
             </div>
-            <div className="w-full mt-10">
+            <div className="mt-10">
                 <div className={'mt-4'}>
                     <label htmlFor="usdAmount">{t.amountInUSD}</label>
                     <CustomInput
@@ -126,7 +133,7 @@ export default function TransferValidator() {
             </div>
 
             {/* Botón de enviar solo si está conectado */}
-            {isConnected  && (
+            {isConnected && (
                 <GradientButton onClick={send} className={'mt-4 w-full'}>
                     {t.connectText}
                 </GradientButton>
@@ -134,5 +141,6 @@ export default function TransferValidator() {
 
             {hash && <p>{hash}</p>}
         </div>
+
     );
 }
