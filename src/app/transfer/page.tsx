@@ -1,5 +1,5 @@
 'use client'
-import React, {useState, useEffect} from "react";
+import React from "react";
 import {config} from "@/web3/config";
 import TransferValidator from "@/app/transfer/TransferValidator";
 import {WagmiProvider} from "wagmi";

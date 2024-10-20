@@ -3,7 +3,7 @@
 import {wagmiAdapter, projectId} from '@/config'
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import {createAppKit} from '@reown/appkit/react'
-import {mainnet, polygonAmoy, sepolia, polygon} from '@reown/appkit/networks'
+import {mainnet, polygonAmoy, sepolia, polygon, AppKitNetwork} from '@reown/appkit/networks'
 import React, {type ReactNode} from 'react'
 import {cookieToInitialState, WagmiProvider, type Config} from 'wagmi'
 
@@ -25,10 +25,11 @@ const metadata = {
 const isProd = process.env.NEXT_PUBLIC_IS_PRODUCTION !== 'false'
 
 const customNets = isProd ? [mainnet, polygon] : [polygonAmoy, sepolia]
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const modal = createAppKit({
     adapters: [wagmiAdapter],
     projectId,
-    networks: customNets,
+    networks: customNets as unknown as [AppKitNetwork, ...AppKitNetwork[]],
     defaultNetwork: isProd ? mainnet : polygonAmoy,
     metadata: metadata,
     features: {
@@ -40,6 +41,9 @@ function ContextProvider({children, cookies}: { children: ReactNode; cookies: st
     const initialState = cookieToInitialState(wagmiAdapter.wagmiConfig as Config, cookies)
 
     return (
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        // @typescript-eslint/ban-ts-comment
         <WagmiProvider config={wagmiAdapter.wagmiConfig as Config} initialState={initialState}>
             <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
         </WagmiProvider>

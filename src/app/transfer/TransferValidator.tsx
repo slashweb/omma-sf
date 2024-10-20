@@ -7,13 +7,13 @@ import {useSearchParams} from "next/navigation";
 import {getUserWallets} from "@/web3/utils";
 import {useAppKitAccount} from "@reown/appkit/react";
 import CustomInput from "@/components/CustomInput";
-import {bigint} from "zod";  // Importar el componente CustomInput
+import { Wallet } from "@/types/general";
 
 export default function TransferValidator() {
     const {data: hash, sendTransaction} = useSendTransaction();
     const t = useTranslation();
     const [uid, setUid] = useState('');
-    const [wallets, setWallets] = useState([]);
+    const [wallets, setWallets] = useState([] as Wallet[]);
     const [usdAmount, setUsdAmount] = useState('');  // Monto en USD
     const [nativeAmount, setNativeAmount] = useState(0);  // Monto en la moneda nativa
     const [totalNativeAmount, setTotalNativeAmount] = useState(0);  // Monto total (incluyendo comisión) en la moneda nativa
@@ -43,11 +43,14 @@ export default function TransferValidator() {
 
     // Función para enviar la transacción
     async function send() {
-        console.log('wallets', wallets);
-        const to = wallets[0].address;
-        console.log('sending to', to);
+        if (!wallets.length) {
+            alert('No wallets found');
+            return;
+        }
+        let to = wallets[0].address;
+        to = to.replace('0x', '');
         sendTransaction({
-            to,
+            to: `0x${to}`,
             value: convertEthToWei(totalNativeAmount),  // Envía la cantidad total (incluyendo comisión) en tokens nativos
         });
     }
