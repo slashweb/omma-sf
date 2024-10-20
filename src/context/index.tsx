@@ -1,9 +1,10 @@
+/**
 'use client'
 
 import {wagmiAdapter, projectId} from '@/config'
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import {createAppKit} from '@reown/appkit/react'
-import {mainnet, polygonAmoy, sepolia, polygon, AppKitNetwork} from '@reown/appkit/networks'
+import {mainnet, polygon, polygonAmoy, sepolia} from '@reown/appkit/networks'
 import React, {type ReactNode} from 'react'
 import {cookieToInitialState, WagmiProvider, type Config} from 'wagmi'
 
@@ -16,10 +17,10 @@ if (!projectId) {
 
 // Set up metadata
 const metadata = {
-    name: 'appkit-example',
-    description: 'AppKit Example',
-    url: 'https://appkitexampleapp.com', // origin must match your domain & subdomain
-    icons: ['https://avatars.githubusercontent.com/u/179229932']
+    name: 'omma-cash',
+    description: 'OmmaCash project',
+    url: 'https://auth.ommacash.com',
+    icons: []
 }
 
 const isProd = process.env.NEXT_PUBLIC_IS_PRODUCTION !== 'false'
@@ -29,7 +30,7 @@ const customNets = isProd ? [mainnet, polygon] : [polygonAmoy, sepolia]
 const modal = createAppKit({
     adapters: [wagmiAdapter],
     projectId,
-    networks: customNets as unknown as [AppKitNetwork, ...AppKitNetwork[]],
+    networks: [mainnet, ...customNets],
     defaultNetwork: isProd ? mainnet : polygonAmoy,
     metadata: metadata,
     features: {
@@ -37,13 +38,14 @@ const modal = createAppKit({
     }
 })
 
+
 function ContextProvider({children, cookies}: { children: ReactNode; cookies: string | null }) {
     const initialState = cookieToInitialState(wagmiAdapter.wagmiConfig as Config, cookies)
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    // @typescript-eslint/ban-ts-comment
     return (
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
-        // @typescript-eslint/ban-ts-comment
         <WagmiProvider config={wagmiAdapter.wagmiConfig as Config} initialState={initialState}>
             <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
         </WagmiProvider>
@@ -51,3 +53,4 @@ function ContextProvider({children, cookies}: { children: ReactNode; cookies: st
 }
 
 export default ContextProvider
+**/

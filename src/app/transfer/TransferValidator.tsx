@@ -1,13 +1,12 @@
 import GradientButton from "@/components/GradientButton";
-import {useSendTransaction} from "wagmi";
-import CustomWalletConnect from "@/components/CustomWalletConnect";
+import {useAccount, useSendTransaction} from "wagmi";
 import {useTranslation} from "@/context/TranslationContext";
 import {useEffect, useState} from "react";
 import {useSearchParams} from "next/navigation";
 import {getUserWallets} from "@/web3/utils";
-import {useAppKitAccount} from "@reown/appkit/react";
 import CustomInput from "@/components/CustomInput";
 import { Wallet } from "@/types/general";
+import {ConnectButton} from "@rainbow-me/rainbowkit";
 
 export default function TransferValidator() {
     const {data: hash, sendTransaction} = useSendTransaction();
@@ -20,7 +19,7 @@ export default function TransferValidator() {
     const [priceUSD, setPriceUSD] = useState(0);  // Precio del token en USD
     const [usdCommission] = useState(0.5);  // Comisión fija en USD
     const searchParams = useSearchParams();
-    const {isConnected} = useAppKitAccount();
+    const {isConnected} = useAccount();
 
     // Obtener el UID desde los query params
     useEffect(() => {
@@ -122,12 +121,12 @@ export default function TransferValidator() {
             </div>
 
             {/* Conectar billetera */}
-            <div className={'mt-10 w-full'}>
-                <CustomWalletConnect/>
+            <div className={'mt-10 w-full justify-center items-center text-center'}>
+                <ConnectButton/>
             </div>
 
             {/* Botón de enviar solo si está conectado */}
-            {isConnected && wallets.length > 0 && (
+            {isConnected  && (
                 <GradientButton onClick={send} className={'mt-4 w-full'}>
                     {t.connectText}
                 </GradientButton>
