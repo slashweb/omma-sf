@@ -98,6 +98,7 @@ export default function TransferValidator() {
         setUsdAmount(e.target.value);
     };
 
+
     return (
         <div className={'flex shadow-lg p-4 rounded-lg flex-1 flex-col mx-auto my-10 justify-center max-w-xl'}>
             <div className="flex flex-col items-center">
@@ -121,15 +122,24 @@ export default function TransferValidator() {
                 </div>
             </div>
 
-            {/* Mostrar el equivalente en la moneda nativa */}
             <p className="mt-2 text-center">
-                {nativeAmount ? `${nativeAmount.toFixed(6)} ${chain?.id === 137 ? 'MATIC' : 'ETH'}` : t.calculating}
+
+                {
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    // @ts-expect-error
+                    nativeAmount ? `${nativeAmount.toFixed(6)} ${chain?.id === 137 ? 'MATIC' : 'ETH'}` : t.calculating
+                }
             </p>
 
-            {/* Mostrar el desglose de la cantidad incluyendo la comisión */}
             <div className="mt-4 text-center">
                 <p>{t.commission}: $0.5 USD</p>
-                <p>{t.totalWithCommission}: {totalNativeAmount.toFixed(6)} {chain?.id === 137 ? 'MATIC' : 'ETH'}</p>
+                <p>
+                    {
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                        // @ts-expect-error
+                        t.totalWithCommission}: {totalNativeAmount.toFixed(6)} {chain?.id === 137 ? 'MATIC' : 'ETH'
+                }
+                </p>
             </div>
 
             {/* Conectar billetera */}
