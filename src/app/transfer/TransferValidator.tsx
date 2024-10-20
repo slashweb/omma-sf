@@ -6,7 +6,8 @@ import {useEffect, useState} from "react";
 import {useSearchParams} from "next/navigation";
 import {getUserWallets} from "@/web3/utils";
 import {useAppKitAccount} from "@reown/appkit/react";
-import CustomInput from "@/components/CustomInput";  // Importar el componente CustomInput
+import CustomInput from "@/components/CustomInput";
+import {bigint} from "zod";  // Importar el componente CustomInput
 
 export default function TransferValidator() {
     const {data: hash, sendTransaction} = useSendTransaction();
@@ -36,6 +37,10 @@ export default function TransferValidator() {
         }
     }, [uid]);
 
+    function convertEthToWei(ethAmount: number): bigint {
+        return BigInt(Math.floor(ethAmount * 1e18));  // Convierte el valor a Wei y luego a BigInt
+    }
+
     // Función para enviar la transacción
     async function send() {
         console.log('wallets', wallets);
@@ -43,7 +48,7 @@ export default function TransferValidator() {
         console.log('sending to', to);
         sendTransaction({
             to,
-            value: totalNativeAmount,  // Envía la cantidad total (incluyendo comisión) en tokens nativos
+            value: convertEthToWei(totalNativeAmount),  // Envía la cantidad total (incluyendo comisión) en tokens nativos
         });
     }
 
@@ -109,7 +114,7 @@ export default function TransferValidator() {
 
             {/* Mostrar el desglose de la cantidad incluyendo la comisión */}
             <div className="mt-4 text-center">
-                <p>{t.commission}: 0.5 USD</p>
+                <p>{t.commission}: $0.5 USD</p>
                 <p>{t.totalWithCommission}: {totalNativeAmount.toFixed(6)} ETH</p>
             </div>
 
